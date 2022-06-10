@@ -1,14 +1,11 @@
 package com.itwillbs.trust.vo;
 
-public class QnAVO {
+public class AdminVO {
 	private int num;
 	private String nickname;
 	private String date;
 	private String title;
 	private String content;
-	private int re_ref;
-	private int re_lev;
-	private int re_seq;
 	private int readcount;
 	
 	public int getNum() {
@@ -40,24 +37,6 @@ public class QnAVO {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public int getRe_ref() {
-		return re_ref;
-	}
-	public void setRe_ref(int re_ref) {
-		this.re_ref = re_ref;
-	}
-	public int getRe_lev() {
-		return re_lev;
-	}
-	public void setRe_lev(int re_lev) {
-		this.re_lev = re_lev;
-	}
-	public int getRe_seq() {
-		return re_seq;
-	}
-	public void setRe_seq(int re_seq) {
-		this.re_seq = re_seq;
 	}
 	public int getReadcount() {
 		return readcount;
