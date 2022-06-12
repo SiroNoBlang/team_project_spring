@@ -1,12 +1,11 @@
 package com.itwillbs.trust.vo;
 
 public class MemberVO {
-	private String grade_name;
-	private int lowest_acc_money;
-	private int highest_acc_money;
-	private int discount_rate;
-	private String reason_num;
-	private String reason_content;
+	private String level;
+	private int lowest;
+	private int highest;
+	private int discount;
+	private String content;
 	private String num;
 	private String code;
 	private String nickname;
@@ -35,6 +34,7 @@ public class MemberVO {
 	private String passwd_change_date;
 	private String login_date;
 	private int order_count;
+	private String reason;
 	
 	// 멤버 등급 및 상태에 따른 인원 수 저장
 	private int top_level;
@@ -42,41 +42,35 @@ public class MemberVO {
 	private int suspension;
 	private int withdrawal;
 	
-	public String getGrade_name() {
-		return grade_name;
+	public String getLevel() {
+		return level;
 	}
-	public void setGrade_name(String grade_name) {
-		this.grade_name = grade_name;
+	public void setLevel(String level) {
+		this.level = level;
 	}
-	public int getLowest_acc_money() {
-		return lowest_acc_money;
+	public int getLowest() {
+		return lowest;
 	}
-	public void setLowest_acc_money(int lowest_acc_money) {
-		this.lowest_acc_money = lowest_acc_money;
+	public void setLowest(int lowest) {
+		this.lowest = lowest;
 	}
-	public int getHighest_acc_money() {
-		return highest_acc_money;
+	public int getHighest() {
+		return highest;
 	}
-	public void setHighest_acc_money(int highest_acc_money) {
-		this.highest_acc_money = highest_acc_money;
+	public void setHighest(int highest) {
+		this.highest = highest;
 	}
-	public int getDiscount_rate() {
-		return discount_rate;
+	public int getDiscount() {
+		return discount;
 	}
-	public void setDiscount_rate(int discount_rate) {
-		this.discount_rate = discount_rate;
+	public void setDiscount(int discount) {
+		this.discount = discount;
 	}
-	public String getReason_num() {
-		return reason_num;
+	public String getContent() {
+		return content;
 	}
-	public void setReason_num(String reason_num) {
-		this.reason_num = reason_num;
-	}
-	public String getReason_content() {
-		return reason_content;
-	}
-	public void setReason_content(String reason_content) {
-		this.reason_content = reason_content;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public String getNum() {
 		return num;
@@ -245,6 +239,12 @@ public class MemberVO {
 	}
 	public void setOrder_count(int order_count) {
 		this.order_count = order_count;
+	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 	public int getTop_level() {
 		return top_level;

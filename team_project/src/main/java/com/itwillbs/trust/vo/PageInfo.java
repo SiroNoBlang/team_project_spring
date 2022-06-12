@@ -10,6 +10,38 @@ public class PageInfo {
 	private int startRow; // 조회 시작 행 번호
 	private int listLimit; // 페이지 당 게시물 수
 	
+	public PageInfo() {}
+	
+	public PageInfo(int pageNum, int maxPage, int startPage, int endPage, int listCount) {
+		super();
+		this.pageNum = pageNum;
+		this.maxPage = maxPage;
+		this.startPage = startPage;
+		this.endPage = endPage;
+		this.listCount = listCount;
+	}
+	
+	public PageInfo(int pageNum, int maxPage, int startPage, int endPage, int listCount, int listLimit) {
+		super();
+		this.pageNum = pageNum;
+		this.maxPage = maxPage;
+		this.startPage = startPage;
+		this.endPage = endPage;
+		this.listCount = listCount;
+		this.listLimit = listLimit;
+	}
+	
+	public PageInfo(int pageNum, int maxPage, int startPage, int endPage, int listCount, int startRow, int listLimit) {
+		super();
+		this.pageNum = pageNum;
+		this.maxPage = maxPage;
+		this.startPage = startPage;
+		this.endPage = endPage;
+		this.listCount = listCount;
+		this.startRow = startRow;
+		this.listLimit = listLimit;
+	}
+	
 	public int getPageNum() {
 		return pageNum;
 	}

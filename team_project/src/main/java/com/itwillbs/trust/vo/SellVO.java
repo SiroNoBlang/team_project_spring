@@ -2,7 +2,7 @@ package com.itwillbs.trust.vo;
 
 public class SellVO {
 	private int num;
-	private String member_code;
+	private String code;
 	private String title;
 	private String category;
 	private String category_detail;
@@ -37,11 +37,11 @@ public class SellVO {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getMember_code() {
-		return member_code;
+	public String getCode() {
+		return code;
 	}
-	public void setMember_code(String member_code) {
-		this.member_code = member_code;
+	public void setCode(String code) {
+		this.code = code;
 	}
 	public String getTitle() {
 		return title;
