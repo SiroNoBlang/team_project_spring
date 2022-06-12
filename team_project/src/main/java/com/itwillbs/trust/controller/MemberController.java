@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -109,5 +110,23 @@ public class MemberController {
 		session.setAttribute("nickname", result);
 		
 		return "redirect:/Management";
+	}
+	
+	@RequestMapping(value = "Logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:HomePage/first_page/index";
+	}
+	
+	@RequestMapping(value = "findId")
+	public String findId(String find_id_nickname, String find_id_email, Model model) {
+		System.out.println(find_id_nickname);
+		System.out.println(find_id_email);
+		
+		// nickname과 email이 일치하는 아이디 가져오기 service.isFindId(find_id_nickname, find_id_email)
+		String id = "";
+		
+		model.addAttribute("id", id);
+		return "";
 	}
 }

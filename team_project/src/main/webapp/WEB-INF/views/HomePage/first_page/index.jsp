@@ -231,18 +231,18 @@
 //==================================================================================제약조건
 	
 	$(function(){
-		$('#idFind_login').hide();
-		$("#idFind").on("click",function(){
+		$('findId_login').hide();
+		$("#findId").on("click",function(){
 			let sendData = $("#fi").serialize();
 			$.ajax({
 				type:"GET",
-				url:"HomePage/first_page/find_id.jsp",
+				url:"findId",
 				data: sendData,
 				dataType:"text",
-				success:function(msg){
-					$("#findIdResultArea").html(msg);
-					$('#idFind').hide(); //idFind_login
-					$('#idFind_login').show();
+				success:function(id){
+					$("#findIdResultArea").html(id);
+					$('#findId').hide(); //idFind_login
+					$('#findId_login').show();
 				},
 				error: function(xhr, textStatus, errorThrown){
 					$("#findIdResultArea").html(
@@ -255,11 +255,11 @@
 	});
 	
 	$(function(){
-		$("#idFind_login").on("click", function(){
+		$("#findId_login").on("click", function(){
 			location.href="#contact";
 			$('#findIdResultArea').empty();
-			$('#idFind_login').hide();
-			$('#idFind').show();
+			$('#findId_login').hide();
+			$('#findId').show();
 		});
 	});
 	
@@ -275,8 +275,8 @@
 			</div>
 			<div class="content">
 				<div class="inner">
-					<h1>사이트 이름</h1>
-					<p>사이트 소개.</p>
+					<h1>TRUST</h1>
+					<p>decoro.</p>
 				</div>
 			</div>
 			<nav>
@@ -329,19 +329,19 @@
 						</div>
 					</div>
 					<ul class="actions">
-						<li><input type="button" value="Find" class="primary" id="idFind"/> <div id="findIdResultArea" ></div></li>
-						<li><input type="reset" value="Login" class="primary" id="idFind_login" /> </li>
+						<li><input type="button" value="Find" class="primary" id="findId"/> <div id="findIdResultArea" ></div></li>
+						<li><input type="reset" value="Login" class="primary" id="findId_login" /> </li>
 					</ul>
 				</form>
 				<h2 class="major">FIND PASSWORD</h2>
-				<form method="post" action="FindPasswd.ma">
+				<form method="post" action="FindPasswd">
 					<div class="fields">
 						<div class="field half">
 							<label for="find_passwd_id">ID</label>
 							<input type="text" name="find_passwd_id" id="find_passwd_id" />
 						</div>
 						<div class="field half">
-							<label for="find_passwd_member_email">EMAIL</label>
+							<label for="find_passwd_email">EMAIL</label>
 							<input type="email" name="find_passwd_email" id="find_passwd_email" />
 						</div>
 					</div>
@@ -364,14 +364,14 @@
 					<fieldset>
 						<legend>이용약관(필수)</legend>
 						<textarea rows="5" cols="5">
-제1조(목적) 이 약관은 OO 회사(전자상거래 사업자)가 운영하는 OO 사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.
+제1조(목적) 이 약관은 'TRUST' 회사(전자상거래 사업자)가 운영하는 'TRUST' 사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.
 
 ※「PC통신, 무선 등을 이용하는 전자상거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다.」
 
 
 제2조(정의)
 
-① “몰”이란 OO 회사가 재화 또는 용역(이하 “재화 등”이라 함)을 이용자에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 재화 등을 거래할 수 있도록 설정한 가상의 영업장을 말하며, 아울러 사이버몰을 운영하는 사업자의 의미로도 사용합니다.
+① “몰”이란 'TRUST' 회사가 재화 또는 용역(이하 “재화 등”이라 함)을 이용자에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 재화 등을 거래할 수 있도록 설정한 가상의 영업장을 말하며, 아울러 사이버몰을 운영하는 사업자의 의미로도 사용합니다.
 
 ② “이용자”란 “몰”에 접속하여 이 약관에 따라 “몰”이 제공하는 서비스를 받는 회원 을 말합니다.
 

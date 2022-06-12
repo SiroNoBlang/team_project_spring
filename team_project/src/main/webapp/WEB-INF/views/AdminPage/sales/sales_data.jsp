@@ -11,7 +11,7 @@
 	$(function() {
 		$.ajax({
 			type : 'POST',
-			url : "SalesChart.co",
+			url : "SalesChart",
 			dataType : 'json',
 			success : function(data) {
 				drawChart(data);

@@ -19,7 +19,7 @@ String id = request.getParameter("join_member_id");
 // 	if(id.length()>=8 && id.length()<=16 ){
 // 		String[] spec = {"!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=" ,"`" ,"~" ,"[" ,"{" ,"]" ,"}" ,";" ,":" ,"'" ,"\"" ,"," ,"<" ,"." ,">" ,"/" ,"?" ,"\\" ,"|"}; 
 		
-// 		for( String s : spec){
+// 		for(String s : spec){
 // 			if(id.contains(s)){
 // 				if(s!=""){
 // 				out.println(s+" 사용불가");

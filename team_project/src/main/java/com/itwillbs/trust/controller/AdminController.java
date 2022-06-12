@@ -1,6 +1,10 @@
 package com.itwillbs.trust.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
+import com.itwillbs.trust.vo.AdminVO;
 import com.itwillbs.trust.vo.MemberVO;
 import com.itwillbs.trust.vo.PageInfo;
 
@@ -180,5 +186,36 @@ public class AdminController {
 		
 		
 		return "AdminPage/notice/noticeView";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value = "Sales", method = RequestMethod.GET)
+	public String sales() {
+		return "AdminPage/sales/sales_main";
+	}
+	
+	@RequestMapping(value = "SalesChart", method = RequestMethod.POST)
+	public void salesChart(HttpServletResponse response) {
+		String[] month = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+		
+		// 각 월에 해당하는 값 담기 service.getSalesChartList(month);
+		List<AdminVO> salesChartList = null;
+		
+		String json = new Gson().toJson(salesChartList);
+		
+		try {
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
