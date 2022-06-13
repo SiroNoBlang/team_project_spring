@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
-<script src="AdminPage/js/jquery-3.6.0.js"></script>
+<script src="${path}/resources//js/jquery-3.6.0.js"></script>
 <div class="chart-container" style="position: relative; height: 200px; width: 60vw">
 	<canvas id="myChart"></canvas>
 </div>

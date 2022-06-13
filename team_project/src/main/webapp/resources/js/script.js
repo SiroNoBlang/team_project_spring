@@ -107,7 +107,7 @@ $('#toggle-left-menu').click(function() {
     	function confirmLogout() {
 			//alert("함수확인");
 			if(confirm("로그아웃 하시겠습니까?")) {
-					location.href = "./Logout.ma";
+					location.href = "Logout";
 				}
 	}
 	
@@ -196,7 +196,7 @@ $('#toggle-left-menu').click(function() {
 			} else {
 				cmStatus ="판매중";
 			}
-				location.href = "./ProductConfirmType.co?cmStatus=" + cmStatus;
+				location.href = "ProductConfirm?value=" + cmStatus;
 		}
 		
 		

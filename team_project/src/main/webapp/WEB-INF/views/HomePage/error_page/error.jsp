@@ -7,7 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>에러 페이지</h1>
-	<input type="button" value="낚시용입니다. 못 돌아가요.">
+	<script type="text/javascript">
+		// 전달받은 오류 메세지(msg) 출력 후 이전페이지로 돌아가기
+		alert("${msg}");
+		history.back();
+	</script>	
 </body>
 </html>

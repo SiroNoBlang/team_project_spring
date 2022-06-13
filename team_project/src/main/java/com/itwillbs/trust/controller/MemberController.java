@@ -63,7 +63,7 @@ public class MemberController {
 //			return "result";
 //		} else {
 //			model.addAttribute("msg", "사용하실 수 없는 이메일입니다.");
-//			return "";
+//			return "HomePage/error_page/error";
 //		}
 		
 		return "";
@@ -85,25 +85,23 @@ public class MemberController {
 		
 //		if(isLogin != null) {
 //			if(isLogin.getLevel().equals("Admin")) {
-//				model.addAttribute("code", isLogin.getCode());
-//				model.addAttribute("nickname", isLogin.getNickname());
-//				return "";
+//				session.setAttribute("code", isLogin.getCode());
+//				session.setAttribute("nickname", isLogin.getNickname());
+//				return "redirect:/Management";
 //			} else if(isLogin.getStatus().equals("정상")) {
-//				model.addAttribute("code", isLogin.getCode());
-//				model.addAttribute("nickname", isLogin.getNickname());
-//				return "";
+//				session.setAttribute("code", isLogin.getCode());
+//				session.setAttribute("nickname", isLogin.getNickname());
+//				return "redirect:/Main";
 //			} else if(isLogin.getStatus().equals("정지")) {
 //				model.addAttribute("code", isLogin.getCode());
 //				model.addAttribute("nickname", isLogin.getNickname());
-//				return "";
+//				return "Suspension";
 //			} else if(isLogin.getStatus().equals("탈퇴")) {
-//				model.addAttribute("code", isLogin.getCode());
-//				model.addAttribute("nickname", isLogin.getNickname());
-//				return "";
+//				return "redirect:/Withdrawal";
 //			}
 //		} else {
 //			model.addAttribute("msg", "로그인 실패");
-//			return "";
+//			return "HomePage/error_page/error";
 //		}
 		
 		session.setAttribute("code", login_id);
@@ -115,16 +113,24 @@ public class MemberController {
 	@RequestMapping(value = "Logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:HomePage/first_page/index";
+		return "redirect:/";
 	}
 	
-	@RequestMapping(value = "findId")
+	@RequestMapping(value = "findId", method = RequestMethod.GET)
 	public String findId(String find_id_nickname, String find_id_email, Model model) {
 		System.out.println(find_id_nickname);
 		System.out.println(find_id_email);
 		
 		// nickname과 email이 일치하는 아이디 가져오기 service.isFindId(find_id_nickname, find_id_email)
 		String id = "";
+		
+//		if(id == null) {
+//			model.addAttribute("msg", "일치하는 아이디가 없습니다!");
+//			return "HomePage/error_page/error";
+//		} else {
+//			model.addAttribute("id", id);
+//			return "";
+//		}
 		
 		model.addAttribute("id", id);
 		return "";

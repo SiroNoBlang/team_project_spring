@@ -240,6 +240,7 @@
 				data: sendData,
 				dataType:"text",
 				success:function(id){
+					debugger;
 					$("#findIdResultArea").html(id);
 					$('#findId').hide(); //idFind_login
 					$('#findId_login').show();
