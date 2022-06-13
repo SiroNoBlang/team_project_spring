@@ -41,7 +41,7 @@ public class AdminController {
 			pageNum = Integer.parseInt(page);
 		}
 		
-		// 개시물이 총 개있는지 service.getListCount(table, value);
+		// 개시물이 총 몇개있는지 service.getListCount(table, value);
 		int listCount = 0;
 		
 		// 뿌려줄 리스트 List 객체 service.getManagementList(pageNum, listLimit, value)
