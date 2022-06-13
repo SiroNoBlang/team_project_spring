@@ -123,7 +123,7 @@
 							                    <td>${confirm.getSell_category() } </td>
 							                    <td>${confirm.getSell_brand() } </td>
 							                     <td>
-													<a href="ProductConfirmDetail.co?sell_num=${confirm.getSell_num() }&page=${pageNum}">
+													<a href="ProductConfirmDetail?value_num=${confirm.getSell_num() }&page=${pageNum}">
 								                    	${confirm.getSell_title() } </a>
 								                    </td>
 							                    <td>${confirm.getSell_write_date() } </td>
@@ -148,7 +148,7 @@
     					 <section id="pageList">
 								<c:choose>
 									<c:when test="${pageNum > 1}">
-										<input type="button" value="이전" onclick="location.href='ProductConfirm.co?page=${pageNum - 1}'">
+										<input type="button" value="이전" onclick="location.href='ProductConfirm?page=${pageNum - 1}'">
 									</c:when>
 									<c:otherwise>
 										<input type="button" value="이전">
@@ -161,14 +161,14 @@
 											${i }
 										</c:when>
 										<c:otherwise>
-											<a href="ProductConfirm.co?page=${i }">${i }</a>
+											<a href="ProductConfirm?page=${i }">${i }</a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 						
 								<c:choose>
 									<c:when test="${pageNum < maxPage}">
-										<input type="button" value="다음" onclick="location.href='ProductConfirm.co?page=${pageNum + 1}'">
+										<input type="button" value="다음" onclick="location.href='ProductConfirm?page=${pageNum + 1}'">
 									</c:when>
 									<c:otherwise>
 										<input type="button" value="다음">

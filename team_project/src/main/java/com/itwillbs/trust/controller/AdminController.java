@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
+import com.itwilbs.trust.service.AdminService;
 import com.itwillbs.trust.vo.AdminVO;
 import com.itwillbs.trust.vo.ImgVO;
 import com.itwillbs.trust.vo.MemberVO;
@@ -82,6 +84,10 @@ public class AdminController {
 //			model.addAttribute("member", member);
 //			model.addAttribute("page", page);
 //			return "AdminPage/management/management_detail";
+//			if(member.getLevel().equals("Admin")) {
+//				model.addAttribute("msg", "해당 회원은 정보를 볼 수 없습니다.");
+//				return "HomePage/error_page/error";
+//			}
 //		} else {
 //			model.addAttribute("msg", "해당 회원은 정보를 볼 수 없습니다.");
 //			return "HomePage/error_page/error";
