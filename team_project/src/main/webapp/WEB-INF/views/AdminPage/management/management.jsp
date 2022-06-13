@@ -79,7 +79,6 @@
 				      </section>
 				</div>				
 				
-				
 				<div class="card">
 					<div class="title">목록</div>
 					<div id="board-search">

@@ -1,5 +1,9 @@
 package com.itwillbs.trust.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,8 +21,8 @@ import googleSMTPAuthenticator.MyMessageDigest;
 @Controller
 public class MemberController {
 	
-//	@Autowired
-//	private MemberService service;
+	@Autowired
+	private MemberService service;
 
 	@RequestMapping(value = "/Join", method = RequestMethod.POST)
 	public String checkEmail(HttpServletRequest request, String join_nickname, String join_id, String join_passwd, String join_email1, String join_email2, String join_gender, String join_age, String[] join_style, String[] join_brand, String[] join_category, Model model) {
@@ -88,42 +92,35 @@ public class MemberController {
 	
 	@RequestMapping(value = "Login", method = RequestMethod.POST)
 	public String login(String login_id, String login_passwd, HttpSession session, Model model) {
-		String algorithm = "SHA-256";
 		
-		MyMessageDigest mmd = new MyMessageDigest(algorithm, login_passwd);
+		// 암호화 방식은 SHA-256으로 고정이기 때문에 값을 그냥 넣었습니다.
+		MyMessageDigest mmd = new MyMessageDigest("SHA-256", login_passwd);
 		String result = mmd.getHashedData();
 		
 		// 해당 아이디와 패스워드가 일치하는 정보의 nickname 과 code 가져올 isLogin() 메서드
-//		MemberVO isLogin = service.isLogin(login_id, result);
+		MemberVO isLogin = service.isLogin(login_id, result);
 		
-		// 나중에 삭제해야 됩니다.
-		System.out.println(login_id);
-		System.out.println(login_passwd);
-		System.out.println(result);
+		if(isLogin != null) {
+			if(isLogin.getLevel().equals("Admin")) {
+				session.setAttribute("code", isLogin.getCode());
+				session.setAttribute("nickname", isLogin.getNickname());
+				return "redirect:/Management";
+			} else if(isLogin.getStatus().equals("정상")) {
+				session.setAttribute("code", isLogin.getCode());
+				session.setAttribute("nickname", isLogin.getNickname());
+				return "redirect:/Main";
+			} else if(isLogin.getStatus().equals("정지")) {
+				model.addAttribute("code", isLogin.getCode());
+				model.addAttribute("nickname", isLogin.getNickname());
+				return "HomePage/guide_page/suspension";
+			} else if(isLogin.getStatus().equals("탈퇴")) {
+				return "redirect:HomePage/guide_page/withdrawal";
+			}
+		} else {
+			model.addAttribute("msg", "로그인 실패");
+			return "HomePage/error_page/error";
+		}
 		
-//		if(isLogin != null) {
-//			if(isLogin.getLevel().equals("Admin")) {
-//				session.setAttribute("code", isLogin.getCode());
-//				session.setAttribute("nickname", isLogin.getNickname());
-//				return "redirect:/Management";
-//			} else if(isLogin.getStatus().equals("정상")) {
-//				session.setAttribute("code", isLogin.getCode());
-//				session.setAttribute("nickname", isLogin.getNickname());
-//				return "redirect:/Main";
-//			} else if(isLogin.getStatus().equals("정지")) {
-//				model.addAttribute("code", isLogin.getCode());
-//				model.addAttribute("nickname", isLogin.getNickname());
-//				return "Suspension";
-//			} else if(isLogin.getStatus().equals("탈퇴")) {
-//				return "redirect:/Withdrawal";
-//			}
-//		} else {
-//			model.addAttribute("msg", "로그인 실패");
-//			return "HomePage/error_page/error";
-//		}
-		
-//		model.addAttribute("msg", "로그인 실패");
-//		return "HomePage/error_page/error";
 		session.setAttribute("code", login_id);
 		session.setAttribute("nickname", result);
 		

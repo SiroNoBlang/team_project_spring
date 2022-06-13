@@ -24,16 +24,15 @@ import com.itwillbs.trust.vo.SellVO;
 @Controller
 public class AdminController {
 
-//	@Autowired
-//	private AdminService service;
+	@Autowired
+	private AdminService service;
 	
 	@RequestMapping(value = "Management", method = RequestMethod.GET)
-	public String management(String page, String value, Model model) {
+	public String management(String page, @RequestParam(defaultValue = "") String value, Model model) {
 		
 		int pageNum = 1;
 		int listLimit = 10;
 		int pageLimit = 10;
-		String table = "member";
 		
 		System.out.println(value);
 		
@@ -42,17 +41,14 @@ public class AdminController {
 		}
 		
 		// 개시물이 총 몇개있는지 service.getListCount(table, value);
-		int listCount = 0;
+		int listCount = service.getListCount("member", value);
+		System.out.println(listCount);
 		
-		// 뿌려줄 리스트 List 객체 service.getManagementList(pageNum, listLimit, value)
-		ArrayList<MemberVO> memberList = null;
+		// 뿌려줄 리스트 List 객체
+		ArrayList<MemberVO> memberList = service.getManagementList(pageNum, listLimit, value);
 		
-		// 멤버 상태에 따른 회원 수 service.getStatusCount();
-		MemberVO member = new MemberVO();
-		member.setTop_level(10);
-		member.setNomal(60);
-		member.setSuspension(90);
-		member.setWithdrawal(50);
+		// 멤버 상태에 따른 회원 수
+		MemberVO member = service.getStatusCount();
 		
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
 		int startPage = ((int)((double)pageNum / pageLimit + 0.9) - 1) * pageLimit + 1;

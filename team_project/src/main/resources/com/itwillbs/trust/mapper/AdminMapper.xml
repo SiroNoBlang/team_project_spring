@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itwillbs.trust.mapper.AdminMapper">
+	<select id="selectListCount" resultType="int">
+        SELECT COUNT(*)
+          FROM ${table}
+         WHERE 1=1
+         <if test="!value.equals('') and value != null">
+		 	AND a.id=#{value}
+		 </if>
+    </select>
+    <select id="getStatusCount" resultType="com.itwillbs.trust.vo.MemberVO">
+        SELECT (SELECT COUNT(*) FROM service_log WHERE status='정상') AS normal
+			 , (SELECT COUNT(*) FROM service_log WHERE status='정지') AS suspension
+			 , (SELECT COUNT(*) FROM service_log WHERE status='탈퇴') AS withdrawal
+			 , (SELECT COUNT(*) FROM info_detail WHERE acc_money <![CDATA[>=]]> 100001 AND acc_money <![CDATA[<=]]> 999999999) AS top_level
+  		FROM dual;
+    </select>
+    <select id="selectManagementList" resultType="com.itwillbs.trust.vo.MemberVO">
+    	SELECT a.num AS num
+    		 , a.code AS code
+    		 , a.nickname AS nickname
+    		 , a.email AS email
+    		 , left((b.join_date), 8) AS join_date
+    		 , b.status AS status
+    		 , c.acc_money AS acc_money
+    		 , d.level AS level
+    	  FROM member AS a 
+    	  JOIN service_log AS b 
+    	    ON a.code = b.code 
+    	  JOIN info_detail AS c 
+    	    ON a.code = c.code 
+    	  JOIN grade AS d 
+    	    ON c.acc_money BETWEEN d.lowest AND d.highest 
+    	 WHERE 1=1
+    	 <if test="!value.equals('') and value != null and value.equals('0')">
+		 	AND c.acc_money <![CDATA[>=]]> 100001 AND c.acc_money <![CDATA[<=]]> 999999999
+		 </if>
+    	 <if test="!value.equals('') and value != null and value.equals('1')">
+		 	AND b.status='정상'
+		 </if>
+		 <if test="!value.equals('') and value != null and value.equals('2')">
+		 	AND b.status='정지'
+		 </if>
+		 <if test="!value.equals('') and value != null and value.equals('3')">
+		 	AND b.status='탈퇴'
+		 </if>
+		 <choose>
+		 	<when test="value.equals('0')">
+		 		ORDER BY c.acc_money LIMIT ${pageNum},${listLimit}
+		 	</when>
+		 	<otherwise>
+		 		ORDER BY a.num ASC LIMIT ${pageNum}, ${listLimit}
+		 	</otherwise>
+		 </choose>
+    </select>
+</mapper>

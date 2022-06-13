@@ -25,7 +25,7 @@
 	<!-- 컨트롤러(@Controller) 를 비롯한 어노테이션을 통해 자동 주입될 클래스가 포함된 패키지 지정 -->
 	<context:component-scan base-package="com.itwillbs.trust" />
 	<context:component-scan base-package="com.itwillbs.trust.controller" />
-	<context:component-scan base-package="com.itwillbs.trust.service" />
+	<context:component-scan base-package="com.itwilbs.trust.service" />
 	
 	
 </beans:beans>

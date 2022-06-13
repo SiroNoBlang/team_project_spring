@@ -2,6 +2,8 @@ package com.itwillbs.trust.mapper;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.itwillbs.trust.vo.AdminVO;
 import com.itwillbs.trust.vo.ImgVO;
 import com.itwillbs.trust.vo.MemberVO;
@@ -9,17 +11,17 @@ import com.itwillbs.trust.vo.SellVO;
 
 public interface AdminMapper {
 
-	int selectListCount(String table, String value);
+	public int selectListCount(@Param("table") String table,@Param("value") String value);
 
-	ArrayList<MemberVO> selectManagementList(int pageNum, int listLimit, String value);
+	public ArrayList<MemberVO> selectManagementList(@Param("pageNum") int pageNum, @Param("listLimit") int listLimit, @Param("value") String value);
 
-	MemberVO getStatusCount();
+	public MemberVO getStatusCount();
 
-	MemberVO getMemberDetail(String code);
+	public MemberVO getMemberDetail(String code);
 
-	boolean getManagementUpdate(String code, String status, String reason);
+	public boolean getManagementUpdate(String code, String status, String reason);
 
-	int getListCount(String tableName, String search, String searchType);
+	public int getListCount(String tableName, String search, String searchType);
 
 	AdminVO selectList(String pageNum, String listLimit, String search, String searchType);
 

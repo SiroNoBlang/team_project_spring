@@ -16,8 +16,8 @@ public class MemberService {
 		return false;
 	}
 
-	public MemberVO isLogin(String login_id, String result) {
-		return mapper.isLogin(login_id, result);
+	public MemberVO isLogin(String id, String passwd) {
+		return mapper.isLogin(id, passwd);
 	}
 	
 }
