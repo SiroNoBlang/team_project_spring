@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itwillbs.trust.mapper.MemberMapper">
-	<select id="isLogin" resultType="com.itwillbs.trust.vo.MemberVO">
+	<select id="isLogin" resultType="map">
         SELECT a.code AS code, a.nickname AS nickname, e.level AS level, c.status AS status, c.login_date AS login_date, d.content AS reason
           FROM member AS a
           JOIN info_detail AS b

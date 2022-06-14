@@ -96,35 +96,32 @@ public class MemberController {
 		// 암호화 방식은 SHA-256으로 고정이기 때문에 값을 그냥 넣었습니다.
 		MyMessageDigest mmd = new MyMessageDigest("SHA-256", login_passwd);
 		String result = mmd.getHashedData();
+		String url = "";
 		
 		// 해당 아이디와 패스워드가 일치하는 정보의 nickname 과 code 가져올 isLogin() 메서드
-		MemberVO isLogin = service.isLogin(login_id, result);
-		
+		Map<String, String> isLogin = service.isLogin(login_id, result);
 		if(isLogin != null) {
-			if(isLogin.getLevel().equals("Admin")) {
-				session.setAttribute("code", isLogin.getCode());
-				session.setAttribute("nickname", isLogin.getNickname());
-				return "redirect:/Management";
-			} else if(isLogin.getStatus().equals("정상")) {
-				session.setAttribute("code", isLogin.getCode());
-				session.setAttribute("nickname", isLogin.getNickname());
-				return "redirect:/Main";
-			} else if(isLogin.getStatus().equals("정지")) {
-				model.addAttribute("code", isLogin.getCode());
-				model.addAttribute("nickname", isLogin.getNickname());
-				return "HomePage/guide_page/suspension";
-			} else if(isLogin.getStatus().equals("탈퇴")) {
-				return "redirect:HomePage/guide_page/withdrawal";
+			if(isLogin.get("level").equals("Admin")) {
+				session.setAttribute("code", isLogin.get("code"));
+				session.setAttribute("nickname", isLogin.get("nickname"));
+				url = "redirect:/Management";
+			} else if(isLogin.get("status").equals("정상")) {
+				session.setAttribute("code", isLogin.get("code"));
+				session.setAttribute("nickname", isLogin.get("nickname"));
+				url = "redirect:/Main";
+			} else if(isLogin.get("status").equals("정지")) {
+				model.addAttribute("login_date", isLogin.get("login_date"));
+				model.addAttribute("reason", isLogin.get("reason"));
+				url = "HomePage/guide_page/suspension";
+			} else if(isLogin.get("status").equals("탈퇴")) {
+				url = "redirect:HomePage/guide_page/withdrawal";
 			}
 		} else {
 			model.addAttribute("msg", "로그인 실패");
-			return "HomePage/error_page/error";
+			url = "HomePage/error_page/error";
 		}
 		
-		session.setAttribute("code", login_id);
-		session.setAttribute("nickname", result);
-		
-		return "redirect:/Management";
+		return url;
 	}
 	
 	@RequestMapping(value = "Logout", method = RequestMethod.GET)

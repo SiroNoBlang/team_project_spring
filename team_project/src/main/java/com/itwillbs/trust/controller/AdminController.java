@@ -3,6 +3,7 @@ package com.itwillbs.trust.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,22 +34,44 @@ public class AdminController {
 		int pageNum = 1;
 		int listLimit = 10;
 		int pageLimit = 10;
-		
-		System.out.println(value);
-		
+		int startRow = (pageNum - 1) * listLimit;
+		String table = "";
 		if(page != null) {
 			pageNum = Integer.parseInt(page);
 		}
-		
 		// 개시물이 총 몇개있는지 service.getListCount(table, value);
-		int listCount = service.getListCount("member", value);
-		System.out.println(listCount);
+		// 벨류에 따른 
+		if (value != null) {
+			if (value.equals("0")) {
+				table = "info_detail";
+				value = "VVVIP";
+			} else if (value.equals("1") || value.equals("2") || value.equals("3")) {
+				table = "service_log";
+				if (value.equals("1")) {
+					value = "정상";
+				} else if (value.equals("2")) {
+					value = "정지";
+				} else {
+					value = "탈퇴";
+				}
+			} else {
+				table = "member";
+			}
+		} else {
+			table = "member";
+			value = "";
+		}
+		int listCount = service.getListCount(table);
 		
 		// 뿌려줄 리스트 List 객체
-		ArrayList<MemberVO> memberList = service.getManagementList(pageNum, listLimit, value);
+		System.out.println(value);
+		List<Map<String, String>> memberList = service.getManagementList(startRow, listLimit, value);
+		
+		System.out.println(memberList);
 		
 		// 멤버 상태에 따른 회원 수
-		MemberVO member = service.getStatusCount();
+		Map<String, String> member = service.getStatusCount();
+		System.out.println(member);
 		
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
 		int startPage = ((int)((double)pageNum / pageLimit + 0.9) - 1) * pageLimit + 1;
@@ -62,6 +85,7 @@ public class AdminController {
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("member", member);
 		model.addAttribute("memberList", memberList);
+		model.addAttribute("value", value);
 		
 		return "AdminPage/management/management";
 	}
@@ -69,30 +93,17 @@ public class AdminController {
 	@RequestMapping(value = "ManagementDetail", method = RequestMethod.GET)
 	public String detail(String code, String page, String value, Model model) {
 		
-		System.out.println(code);
-		System.out.println(page);
-		System.out.println(value);
-		
 		// 코드에 해당하는 회원의 상세정보 조회를 위한 getMemberDetail(code);
-		MemberVO member;
+		MemberVO member = service.getMemberDetail(code);
 		
-//		if(member != null) {
-//			model.addAttribute("member", member);
-//			model.addAttribute("page", page);
-//			return "AdminPage/management/management_detail";
-//			if(member.getLevel().equals("Admin")) {
-//				model.addAttribute("msg", "해당 회원은 정보를 볼 수 없습니다.");
-//				return "HomePage/error_page/error";
-//			}
-//		} else {
-//			model.addAttribute("msg", "해당 회원은 정보를 볼 수 없습니다.");
-//			return "HomePage/error_page/error";
-//		}
-		
-		model.addAttribute("code", code);
-		model.addAttribute("page", page);
-		model.addAttribute("value", value);
-		return "AdminPage/management/management_detail";
+		if(member != null) {
+			model.addAttribute("member", member);
+			model.addAttribute("page", page);
+			return "AdminPage/management/management_detail";
+		} else {
+			model.addAttribute("msg", "해당 회원은 정보를 볼 수 없습니다.");
+			return "HomePage/error_page/error";
+		}
 	}
 	
 	@RequestMapping(value = "ManagementUpdate", method = RequestMethod.POST)
@@ -105,21 +116,17 @@ public class AdminController {
 		System.out.println(value);
 		
 		// 회원 상태 정보를 수정하기 위한 service.getManagementUpdate(code, status, reason)
-		boolean isManagementUpdate; // 타입이 boolean이 아닐 수도 있다. mapper에 따라 리턴되는 값이 0, 1이라는 구글링 검색결과가 있기 때문이다.
+		int isManagementUpdate = service.getManagementUpdate(code, status, reason); // 타입이 boolean이 아닐 수도 있다. mapper에 따라 리턴되는 값이 0, 1이라는 구글링 검색결과가 있기 때문이다.
 		
-//		if(isManagementUpdate) {
-//			model.addAttribute("code", code);
-//			model.addAttribute("page", page);
-//			return "redirect:ManagementDetail";
-//		} else {
-//			model.addAttribute("msg", "수정이 되지 않았습니다.");
-//			return "HomePage/error_page/error";
-//		}
+		if(isManagementUpdate > 0) {
+			model.addAttribute("code", code);
+			model.addAttribute("page", page);
+			return "redirect:ManagementDetail";
+		} else {
+			model.addAttribute("msg", "수정이 되지 않았습니다.");
+			return "HomePage/error_page/error";
+		}
 		
-		model.addAttribute("code", code);
-		model.addAttribute("page", page);
-		model.addAttribute("value", value);
-		return "redirect:ManagementDetail";
 	}
 	
 	@RequestMapping(value = "Community", method = RequestMethod.GET)

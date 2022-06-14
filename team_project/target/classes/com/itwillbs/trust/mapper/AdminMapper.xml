@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itwillbs.trust.mapper.AdminMapper">
+	
+	<!-- 해당 상태 및 등급, 검색 결과에 맞는 게시물 총 수 -->
 	<select id="selectListCount" resultType="int">
         SELECT COUNT(*)
           FROM ${table}
-         WHERE 1=1
-         <if test="!value.equals('') and value != null">
-		 	AND a.id=#{value}
-		 </if>
     </select>
-    <select id="getStatusCount" resultType="com.itwillbs.trust.vo.MemberVO">
-        SELECT (SELECT COUNT(*) FROM service_log WHERE status='정상') AS normal
+    
+    <!-- management 페이지에서 항상 위에 상태와 등급에 따른 회원 수 조회 -->
+    <select id="getStatusCount" resultType="map">
+        SELECT (SELECT COUNT(*) FROM service_log WHERE status='정상') AS nomal
 			 , (SELECT COUNT(*) FROM service_log WHERE status='정지') AS suspension
 			 , (SELECT COUNT(*) FROM service_log WHERE status='탈퇴') AS withdrawal
 			 , (SELECT COUNT(*) FROM info_detail WHERE acc_money <![CDATA[>=]]> 100001 AND acc_money <![CDATA[<=]]> 999999999) AS top_level
   		FROM dual;
     </select>
-    <select id="selectManagementList" resultType="com.itwillbs.trust.vo.MemberVO">
+    
+    <!-- 한 페이지에 보여줄 목록 -->
+    <select id="selectManagementList" resultType="map">
     	SELECT a.num AS num
     		 , a.code AS code
     		 , a.nickname AS nickname
@@ -33,25 +35,90 @@
     	  JOIN grade AS d 
     	    ON c.acc_money BETWEEN d.lowest AND d.highest 
     	 WHERE 1=1
-    	 <if test="!value.equals('') and value != null and value.equals('0')">
-		 	AND c.acc_money <![CDATA[>=]]> 100001 AND c.acc_money <![CDATA[<=]]> 999999999
-		 </if>
-    	 <if test="!value.equals('') and value != null and value.equals('1')">
-		 	AND b.status='정상'
-		 </if>
-		 <if test="!value.equals('') and value != null and value.equals('2')">
-		 	AND b.status='정지'
-		 </if>
-		 <if test="!value.equals('') and value != null and value.equals('3')">
-		 	AND b.status='탈퇴'
-		 </if>
-		 <choose>
-		 	<when test="value.equals('0')">
-		 		ORDER BY c.acc_money LIMIT ${pageNum},${listLimit}
-		 	</when>
-		 	<otherwise>
-		 		ORDER BY a.num ASC LIMIT ${pageNum}, ${listLimit}
-		 	</otherwise>
-		 </choose>
+    	 <choose>
+    	 	<when test="value.equals('')">
+    	 		AND 2=2
+    	 	</when>
+    	 	<when test="!value.equals('') and value != null and value.equals('VVVIP')">
+    	 		AND <![CDATA[c.acc_money>=100001 AND c.acc_money<=999999999]]>
+    	 	</when>
+    	 	<when test="!value.equals('') and value != null and value.equals('정상')">
+    	 		AND b.status='정상'
+    	 	</when>
+    	 	<when test="!value.equals('') and value != null and value.equals('정지')">
+    	 		AND b.status='정지'
+    	 	</when>
+    	 	<when test="!value.equals('') and value != null and value.equals('탈퇴')">
+    	 		AND b.status='탈퇴'
+    	 	</when>
+    	 	<otherwise>
+    	 		AND a.nickname LIKE '%${value}%'
+    	 	</otherwise>
+    	 </choose>
+		 ORDER BY a.num ASC LIMIT ${startRow}, ${listLimit}
     </select>
+    
+    <!-- 해당 멤버코드의 상세한 정보 출력 -->
+    <select id="getMemberDetail" resultType="com.itwillbs.trust.vo.MemberVO">
+        SELECT a.code AS code
+        	 , a.num AS num
+        	 , a.nickname AS nickname
+        	 , a.id AS id
+        	 , a.email AS email
+        	 , b.name AS name
+        	 , b.gender AS gender
+        	 , b.phone AS phone
+        	 , b.age AS age
+        	 , b.post_code AS post_code
+        	 , b.address AS address
+        	 , b.address_detail AS address_detail
+        	 , b.ship_post_code AS ship_post_code
+        	 , b.ship_address AS ship_address
+        	 , b.ship_address_detail AS ship_address_detail
+        	 , c.style AS style
+        	 , c.brand AS brand
+        	 , c.category AS category
+        	 , c.point AS point
+        	 , c.acc_money AS acc_money
+        	 , d.status AS status
+        	 , left((d.join_date), 8) AS join_date
+        	 , left((d.passwd_change_date), 8) AS passwd_change_date
+        	 , left((d.login_date), 8) AS login_date
+        	 , d.order_count AS order_count
+        	 , d.reason AS reason
+        	 , e.level AS level
+          FROM member AS a
+          JOIN info AS b
+            ON a.code = b.code
+          JOIN info_detail AS c
+            ON a.code = c.code
+          JOIN service_log AS d
+            ON a.code = d.code
+          JOIN grade AS e
+            ON c.acc_money BETWEEN e.lowest AND e.highest
+         WHERE a.code = #{code}
+    </select>
+    
+    <!-- 상태에 따른 수정 -->
+    <update id="getManagementUpdate">
+    	<if test="status.equals('정상')">
+    		UPDATE service_log
+    		   SET status=#{status}
+    			 , reason=0
+    		 WHERE code=#{code}
+    	</if>
+    	<if test="status.equals('정지')">
+    		UPDATE service_log
+    		   SET status=#{status}
+    			 , login_date=REPLACE(now(),'-','')
+    			 , reason=#{reason}
+    		 WHERE code=#{code}
+    	</if>
+    	<if test="status.equals('탈퇴')">
+    		UPDATE service_log 
+    		   SET status=#{status}
+    			 , login_date=REPLACE(now(),'-','')
+    		 WHERE code=#{code}
+    	</if>
+    </update>
 </mapper>

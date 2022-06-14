@@ -1,5 +1,7 @@
 package com.itwilbs.trust.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,7 @@ public class MemberService {
 		return false;
 	}
 
-	public MemberVO isLogin(String id, String passwd) {
+	public Map<String, String> isLogin(String id, String passwd) {
 		return mapper.isLogin(id, passwd);
 	}
 	

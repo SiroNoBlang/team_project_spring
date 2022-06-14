@@ -1,6 +1,8 @@
 package com.itwillbs.trust.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -11,15 +13,15 @@ import com.itwillbs.trust.vo.SellVO;
 
 public interface AdminMapper {
 
-	public int selectListCount(@Param("table") String table,@Param("value") String value);
+	public int selectListCount(@Param("table") String table);
 
-	public ArrayList<MemberVO> selectManagementList(@Param("pageNum") int pageNum, @Param("listLimit") int listLimit, @Param("value") String value);
+	public List<Map<String, String>> selectManagementList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("value") String value);
 
-	public MemberVO getStatusCount();
+	public Map<String, String> getStatusCount();
 
-	public MemberVO getMemberDetail(String code);
+	public MemberVO getMemberDetail(@Param("code") String code);
 
-	public boolean getManagementUpdate(String code, String status, String reason);
+	public int getManagementUpdate(@Param("code") String code,@Param("status") String status,@Param("reason") String reason);
 
 	public int getListCount(String tableName, String search, String searchType);
 

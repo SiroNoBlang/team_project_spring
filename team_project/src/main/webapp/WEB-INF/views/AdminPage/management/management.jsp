@@ -48,7 +48,7 @@
 				          <div class="panel panel-info">
 				            <div class="panel-heading">VVVIP</div>
 				            <div class="panel-body">
-				              <h4>${member.getTop_level() }</h4>
+				              <h4>${member.top_level }</h4>
 				            </div>
 				          </div>
 				        </div>
@@ -56,7 +56,7 @@
 				          <div class="panel panel-success">
 				            <div class="panel-heading">정상</div>
 				            <div class="panel-body">
-				              <h4>${member.getNomal() }</h4>
+				              <h4>${member.nomal }</h4>
 				            </div>
 				          </div>
 				        </div>
@@ -64,7 +64,7 @@
 				          <div class="panel panel-warning">
 				            <div class="panel-heading">정지</div>
 				            <div class="panel-body">
-				              <h4>${member.getSuspension() }</h4>
+				              <h4>${member.suspension }</h4>
 				            </div>
 				          </div>
 				        </div>
@@ -72,7 +72,7 @@
 				          <div class="panel panel-danger">
 				            <div class="panel-heading">탈퇴</div>
 				            <div class="panel-body">
-				              <h4>${member.getWithdrawal() }</h4>
+				              <h4>${member.withdrawal }</h4>
 				            </div>
 				          </div>
 				        </div>
@@ -95,7 +95,7 @@
 					        <div class="container">
 					            <table class="board-table">
 					                <thead>
-						                <tr onclick="location.href='ManagementDetail?code=${management.getCode() }&page=${pageNum}&value=${param.value }'" style="cursor:pointer;">
+						                <tr onclick="location.href='ManagementDetail?code=${management.getCode() }&page=${pageNum}&value=${value }'" style="cursor:pointer;">
 						                    <th scope="col" class="th-num">번호</th>
 						                    <th scope="col" class="th-title">이메일</th>
 						                    <th scope="col" class="th-date">닉네임</th>
@@ -108,14 +108,14 @@
 						                <tbody>
 						                <c:if test="${not empty memberList and pageInfo.getListCount() > 0}">
 											<c:forEach var="management" items="${memberList }" varStatus="status">
-								                <tr onclick="location.href='ManagementDetail?code=${management.getCode() }&page=${pageNum}&value=${value }'" style="cursor:pointer;">
-								                	<td>${management.getNum() }</td>
-								                    <td>${management.getEmail() }</td>
-								                    <td>${management.getNickname() }</td>
-								                    <td>${management.getLevel() }</td>
-								                    <td>${management.getAcc_money() }</td>
-													<td>${management.getJoin_date() }</td>
-													<td>${management.getStatus() }</td>
+								                <tr onclick="location.href='ManagementDetail?code=${management.code }&page=${pageNum}&value=${value }'" style="cursor:pointer;">
+								                	<td>${management.num }</td>
+								                    <td>${management.email }</td>
+								                    <td>${management.nickname }</td>
+								                    <td>${management.level }</td>
+								                    <td>${management.acc_money }</td>
+													<td>${management.join_date }</td>
+													<td>${management.status }</td>
 								                </tr>
 							              </c:forEach>
 										</c:if>
