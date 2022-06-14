@@ -121,4 +121,10 @@
     		 WHERE code=#{code}
     	</if>
     </update>
+    
+    <!-- 탈퇴한 회원 삭제 -->
+    <delete id="isDelete">
+    	DELETE FROM member 
+    	 WHERE code=#{code}
+    </delete>
 </mapper>

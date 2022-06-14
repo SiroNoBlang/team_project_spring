@@ -39,6 +39,10 @@ public class AdminService {
 		return adminMapper.getManagementUpdate(code, status, reason);
 	}
 
+	public int isDelete(String code) {
+		return adminMapper.isDelete(code);
+	}
+	
 	public int getListCount(String tableName, String search, String searchType) {
 		return adminMapper.getListCount(tableName, search, searchType);
 	}
@@ -70,4 +74,5 @@ public class AdminService {
 	public boolean isProductConfirmUpdate(int num, String status, String nickname) {
 		return adminMapper.isProductConfirmUpdate(num, status, nickname);
 	}
+
 }

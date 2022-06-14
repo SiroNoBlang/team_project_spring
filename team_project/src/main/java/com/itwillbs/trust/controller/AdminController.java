@@ -28,6 +28,7 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
+	// Management 리스트 및 검색 결과 리스트, 상태에 따른 리스트
 	@RequestMapping(value = "Management", method = RequestMethod.GET)
 	public String management(String page, @RequestParam(defaultValue = "") String value, Model model) {
 		
@@ -39,8 +40,7 @@ public class AdminController {
 		if(page != null) {
 			pageNum = Integer.parseInt(page);
 		}
-		// 개시물이 총 몇개있는지 service.getListCount(table, value);
-		// 벨류에 따른 
+		// 해당하는 개시물의 총 수
 		if (value != null) {
 			if (value.equals("0")) {
 				table = "info_detail";
@@ -90,6 +90,7 @@ public class AdminController {
 		return "AdminPage/management/management";
 	}
 	
+	// 해당 회원 코드의 상세 정보 출력
 	@RequestMapping(value = "ManagementDetail", method = RequestMethod.GET)
 	public String detail(String code, String page, String value, Model model) {
 		
@@ -106,14 +107,9 @@ public class AdminController {
 		}
 	}
 	
+	// 해당 회원의 상태 변경
 	@RequestMapping(value = "ManagementUpdate", method = RequestMethod.POST)
 	public String managementUpdate(String code, String status, String reason, String page, String value, Model model) {
-		
-		System.out.println(code);
-		System.out.println(status);
-		System.out.println(reason);
-		System.out.println(page);
-		System.out.println(value);
 		
 		// 회원 상태 정보를 수정하기 위한 service.getManagementUpdate(code, status, reason)
 		int isManagementUpdate = service.getManagementUpdate(code, status, reason); // 타입이 boolean이 아닐 수도 있다. mapper에 따라 리턴되는 값이 0, 1이라는 구글링 검색결과가 있기 때문이다.
@@ -128,6 +124,28 @@ public class AdminController {
 		}
 		
 	}
+	
+	// 탈퇴한 회원의 삭제
+	@RequestMapping(value = "ManagementDelete", method = RequestMethod.GET)
+	public String managementDelete(String code, String page, String value, Model model) {
+		System.out.println(code);
+		System.out.println(page);
+		System.out.println(value);
+		
+//		int delete = service.isDelete(code);
+		
+//		if(delete > 0) {
+//			model.addAttribute("page", page);
+//			model.addAttribute("value", value);
+//			return "";
+//		} else {
+//			model.addAttribute("msg", "삭제 실패!");
+//			return "";
+//		}
+		
+		return "";
+	}
+	
 	
 	@RequestMapping(value = "Community", method = RequestMethod.GET)
 	public String community(@RequestParam(defaultValue = "") String table, String page, String search, String searchType, Model model) {

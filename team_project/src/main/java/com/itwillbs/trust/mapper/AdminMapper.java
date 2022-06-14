@@ -22,6 +22,8 @@ public interface AdminMapper {
 	public MemberVO getMemberDetail(@Param("code") String code);
 
 	public int getManagementUpdate(@Param("code") String code,@Param("status") String status,@Param("reason") String reason);
+	
+	public int isDelete(@Param("code") String code);
 
 	public int getListCount(String tableName, String search, String searchType);
 
