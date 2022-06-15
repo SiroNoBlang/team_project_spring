@@ -61,7 +61,7 @@ public class AdminController {
 			table = "member";
 			value = "";
 		}
-		int listCount = service.getListCount(table);
+		int listCount = service.selectListCount(table, value, "");
 		
 		// 뿌려줄 리스트 List 객체
 		List<Map<String, String>> memberList = service.getManagementList(startRow, listLimit, value);
@@ -139,10 +139,13 @@ public class AdminController {
 		
 	}
 	
-	
+	// 공지사항, 이벤트, QnA 목록 및 검색 결과에 따른 목록
 	@RequestMapping(value = "Community", method = RequestMethod.GET)
 	public String community(@RequestParam(defaultValue = "") String table, String page, String search, String searchType, Model model) {
 		System.out.println(table);
+		System.out.println(page);
+		System.out.println(search);
+		System.out.println(searchType);
 		
 		// 페이징 처리를 위한 변수 선언
 		int pageNum = 1; // 현재 페이지 번호
@@ -153,11 +156,16 @@ public class AdminController {
 			pageNum = Integer.parseInt(page);
 		}
 		
+		int startRow = (pageNum - 1) * listLimit;
+		
 		// 해당 테이블에 총 게시물 가져오기 service.getListCount(tableName, search, searchType)
-		int listCount = 0;
+		int listCount = service.selectListCount(table, search, searchType);
 		
 		// 해당 게시물 목록 담을 변수 설정 service.selectList(pageNum, listLimit, search, searchType)
 		ArrayList<AdminVO> list = null;
+		if(!table.equals("dual")) {
+			list = service.selectList(startRow, listLimit, table, search, searchType);
+		}
 		
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
 		int startPage = ((int)((double)pageNum / pageLimit + 0.9) - 1) * pageLimit + 1;
@@ -171,28 +179,35 @@ public class AdminController {
 
 		
 		if(table.equals("notice")) {
-			
 			model.addAttribute("list", list);
 			model.addAttribute("msg", "공지사항");
 			model.addAttribute("pageInfo", pageInfo);
-			return "AdminPage/notice/noticeList";
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("search", search);
+			return "AdminPage/community/communityList";
 		} else if(table.equals("event")) {
-			
 			model.addAttribute("list", list);
 			model.addAttribute("msg", "이벤트");
 			model.addAttribute("pageInfo", pageInfo);
-			return "AdminPage/notice/noticeList";
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("search", search);
+			return "AdminPage/community/communityList";
 		} else if(table.equals("qna")) {
-			
 			model.addAttribute("list", list);
 			model.addAttribute("msg", "QnA");
 			model.addAttribute("pageInfo", pageInfo);
-			return "AdminPage/notice/noticeList";
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("search", search);
+			return "AdminPage/community/communityList";
 		} else {
-			return "AdminPage/notice/communityWrite";
+			return "AdminPage/community/communityWrite";
 		}
 	}
 	
+	// 해당하는 글(공지사항, 이벤트, QnA) 작성 하기
+	
+	
+	// 해당 글의 상세 정보 출력
 	@RequestMapping(value = "CommunityDetail", method = RequestMethod.GET)
 	public String communityDetail(String value_num, String page, String msg, Model model) {
 		
@@ -210,8 +225,11 @@ public class AdminController {
 			model.addAttribute("adminArticle", adminArticle);
 		}
 		
-		return "AdminPage/notice/noticeView";
+		return "AdminPage/community/communityView";
 	}
+	
+	// 해당 글(공지사항, 이벤트) 수정
+	
 	
 	@RequestMapping(value = "ProductConfirm", method = RequestMethod.GET)
 	public String productConfirm(String page, String type, String value, Model model) {

@@ -13,7 +13,7 @@ import com.itwillbs.trust.vo.SellVO;
 
 public interface AdminMapper {
 
-	public int selectListCount(@Param("table") String table);
+	public int selectListCount(@Param("table") String table,@Param("search") String search, @Param("searchType") String searchType);
 
 	public List<Map<String, String>> selectManagementList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("value") String value);
 
@@ -21,13 +21,11 @@ public interface AdminMapper {
 
 	public MemberVO getMemberDetail(@Param("code") String code);
 
-	public int getManagementUpdate(@Param("code") String code,@Param("status") String status,@Param("reason") String reason);
+	public int getManagementUpdate(@Param("code") String code, @Param("status") String status, @Param("reason") String reason);
 	
 	public int isDelete(@Param("code") String code);
 
-	public int getListCount(String tableName, String search, String searchType);
-
-	AdminVO selectList(String pageNum, String listLimit, String search, String searchType);
+	ArrayList<AdminVO> selectList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("table") String table, @Param("search") String search, @Param("searchType") String searchType);
 
 	AdminVO getArticle(int num, String msg);
 

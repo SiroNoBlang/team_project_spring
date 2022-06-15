@@ -19,8 +19,8 @@ public class AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
 
-	public int getListCount(String table) {
-		return adminMapper.selectListCount(table);
+	public int selectListCount(String table, String search, String searchType) {
+		return adminMapper.selectListCount(table, search, searchType);
 	}
 
 	public List<Map<String, String>> getManagementList(int startRow, int listLimit, String value) {
@@ -42,13 +42,9 @@ public class AdminService {
 	public int isDelete(String code) {
 		return adminMapper.isDelete(code);
 	}
-	
-	public int getListCount(String tableName, String search, String searchType) {
-		return adminMapper.getListCount(tableName, search, searchType);
-	}
 
-	public AdminVO selectList(String pageNum, String listLimit, String search, String searchType) {
-		return adminMapper.selectList(pageNum, listLimit, search, searchType);
+	public ArrayList<AdminVO> selectList(int startRow, int listLimit, String table, String search, String searchType) {
+		return adminMapper.selectList(startRow, listLimit, table, search, searchType);
 	}
 
 	public AdminVO getArticle(int num, String msg) {

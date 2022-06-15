@@ -7,7 +7,7 @@
 			<li><a href="Community?table=notice">공지사항</a></li>
 			<li><a href="Community?table=event">이벤트</a></li>
 			<li><a href="Community?table=qna">Q&#38;A</a></li>
-			<li><a href="Community">글쓰기</a></li>
+			<li><a href="Community?table=dual">글쓰기</a></li>
 		</ul>
 	</li>
 	<li class="#"><a href="ProductConfirm"> <i class="icon ion-clipboard"></i> <span>검수현황</span></a></li>
