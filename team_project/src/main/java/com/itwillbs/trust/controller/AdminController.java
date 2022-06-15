@@ -213,23 +213,42 @@ public class AdminController {
 		
 		// 데이터베이스가 int 타입으로 되어 있기 때문에 변경 필수
 		int num = Integer.parseInt(value_num);
+		String table = "";
 		
 		// 받아온 값으로 value_num(num)에 해당하는 상세정보 가져오기 service.getArticle(num, msg);
 		AdminVO adminArticle = null;
 		ArrayList<ImgVO> imgFileList = null;
-		if(msg.equals("notice") || msg.equals("event")) {
+		if(msg.equals("공지사항") || msg.equals("이벤트")) {
+			if(msg.equals("공지사항")) {
+				table = "notice";
+			} else {
+				table = "event";
+			}
+			adminArticle = service.getArticle(num, table);
 			// imgFileList = service.getImg(num);
 			model.addAttribute("adminArticle", adminArticle);
 			model.addAttribute("imgFileList", imgFileList);
-		} else if(msg.equals("qna")) {
+			model.addAttribute("msg", msg);
+			return "AdminPage/community/communityView";
+		} else {
+			table = "qna";
+			adminArticle = service.getArticle(num, table);
 			model.addAttribute("adminArticle", adminArticle);
+			model.addAttribute("msg", msg);
+			return "AdminPage/community/communityView";
 		}
 		
-		return "AdminPage/community/communityView";
 	}
 	
 	// 해당 글(공지사항, 이벤트) 수정
-	
+	@RequestMapping(value = "communityModify", method = RequestMethod.GET)
+	public String communityModify(String msg) {
+		if(msg.equals("QnA")) {
+			return "AdminPage/community/qnaModify";
+		} else {
+			return "AdminPage/community/communityModify";
+		}
+	}
 	
 	@RequestMapping(value = "ProductConfirm", method = RequestMethod.GET)
 	public String productConfirm(String page, String type, String value, Model model) {

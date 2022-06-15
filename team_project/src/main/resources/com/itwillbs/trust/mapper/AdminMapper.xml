@@ -141,4 +141,11 @@
 <!--     	</if> -->
     </select>
     
+    <!-- management 페이지에서 항상 위에 상태와 등급에 따른 회원 수 조회 -->
+    <select id="getArticle" resultType="com.itwillbs.trust.vo.AdminVO">
+        SELECT *
+          FROM ${msg}
+         WHERE num=${num}
+    </select>
+    
 </mapper>

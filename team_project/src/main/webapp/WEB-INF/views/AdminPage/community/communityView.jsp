@@ -39,7 +39,7 @@
 				<div class="title">${msg } 글 상세보기</div>
 				
 					<form action="#" name="boardForm" method="post" enctype="multipart/form-data">
-						<input type="hidden" id="num" name="num" value="${param.num}">
+						<input type="hidden" id="value_num" name="value_num" value="${param.value_num}">
 						<input type="hidden" id="page" name="page" value="${param.page}">
 						<table >
 							<tr>
@@ -48,48 +48,48 @@
 							</tr>
 							<tr>
 								<th><label for="board_title">제목</label></th>
-								<td>${noticeArticle.getNotice_title() }</td>
+								<td>${adminArticle.getTitle() }</td>
 							</tr>
 							<tr>
 								<th><label for="board_num">실제글번호</label></th>
-								<td>${noticeArticle.getNotice_num() }</td>
+								<td>${adminArticle.getNum() }</td>
 							</tr>
 							<tr>
 								<th><label for="board_nickname">작성자</label></th>
-								<td>${sNickname }</td>
+								<td>${nickname }</td>
 							</tr>
 							<tr>
 								<th><label for="board_date">작성일</label></th>
-								<td>${noticeArticle.getNotice_write_date() }</td>
+								<td>${adminArticle.getDate() }</td>
 							</tr>
 							<tr>
 								<th><label for="board_readcount">조회수</label></th>
-								<td>${noticeArticle.getNotice_readcount() }</td>
+								<td>${adminArticle.getReadcount() }</td>
 							</tr>
 							<tr>
 								<th><label for="board_content">내용</label></th>
-								<td>${noticeArticle.getNotice_content() } <br>
-									<c:if test="${msg eq 'notice' or msg eq 'event' }">
-										<c:forEach var="img" items="${noticeImgFileList }">
-											<img src="./Upload/admin_notice_img/${img.getNotice_img_file_real_name() }"> <br>
+								<td>${adminArticle.getContent() } <br>
+									<c:if test="${msg eq '공지사항' or msg eq '이벤트' }">
+										<c:forEach var="img" items="${imgFileList }">
+											<img src="./Upload/admin_notice_img/${img.getFile_real_name() }"> <br>
 										</c:forEach>
 									</c:if> 
 								</td>
 							</tr>
-							<c:if test="${msg eq 'notice' or msg eq 'event' }">
+							<c:if test="${msg eq '공지사항' or msg eq '이벤트' }">
 							<tr>
 								<th><label for="board_file">파일 첨부</label></th>
 								<td>
-									<c:forEach var="img" items="${noticeImgFileList }">
-										<a href="./Upload/admin_notice_img/${img.getNotice_img_file_real_name() }" download="${img.getNotice_img_file_name() }"> 
-										${img.getNotice_img_file_name() }</a><br>
+									<c:forEach var="img" items="${imgFileList }">
+										<a href="./Upload/admin_notice_img/${img.getReal_name() }" download="${img.getFile_name() }"> 
+										${img.getFile_name() }</a><br>
 									</c:forEach> 
 								</td>
 							</tr>
 							</c:if>
 						</table>
 						<section id="commandCell">	
-							<input type="button" value="수정" onclick="location.href='NoticeModifyForm.co?notice_num=${param.notice_num}&page=${param.page}'">
+							<input type="button" value="수정" onclick="location.href='communityModify?value_num=${param.value_num}&page=${param.page}&msg=${msg }'">
 							<input type="button" value="삭제" onclick="deleteContents()"> 
 							<input type="button" value="목록" onclick="history.back()">
 <%-- 							<input type="button" value="목록" onclick="location.href='NoticeList.co?page=${param.page}'"> --%>

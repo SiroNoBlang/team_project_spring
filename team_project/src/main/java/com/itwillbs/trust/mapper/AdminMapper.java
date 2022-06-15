@@ -27,7 +27,7 @@ public interface AdminMapper {
 
 	ArrayList<AdminVO> selectList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("table") String table, @Param("search") String search, @Param("searchType") String searchType);
 
-	AdminVO getArticle(int num, String msg);
+	AdminVO getArticle(@Param("num") int num,@Param("msg") String msg);
 
 	ArrayList<ImgVO> getImg(int num);
 

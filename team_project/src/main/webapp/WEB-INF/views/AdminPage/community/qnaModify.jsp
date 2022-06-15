@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자페이지 - 커뮤니티 글쓰기</title>
+<title>관리자페이지 - QnA 글 수정</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
 <link rel='stylesheet' href='https://raw.githubusercontent.com/forsigner/magic-check/master/css/magic-check.css'>
@@ -19,29 +19,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <script src="AdminPage/js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
-	$(document).ready( function() {
-		let date = new Date();
-		let year = date.getFullYear();
-		
-		let month = date.getMonth() + 1;
-		month = month >= 10 ? month : '0' + month;
-		
-		let day = date.getDate();
-		day = day >= 10 ? day : '0' + day;
-		
-		let title = $('input[name=board_title]').val();
-		title = title.substring(title.lastIndexOf("]")+1);
-		
-		$('input[name=board_title]').attr('value',"["+year+""+month+""+day+" 수정] "+title);
-		
-	});
+		$(document).ready( function() {
+			$("#qnaTypeId").change(function(){
+				let title = $('input[name=qna_title]').val();
+				title = title.substring(title.lastIndexOf("]")+1);
+				
+				$("#qnaTitleId").val("["+$(this).val()+"] " + title).focus();
+			});
+		});
 </script>
 </head>
 <body>
 	<div id="logo">
 		<span class="big-logo">Admin</span> <span class="small-logo">&nbsp; A</span>
 	</div>
-	<div id="left-menu">
+		<div id="left-menu">
 		<jsp:include page="/WEB-INF/views/AdminPage/menu/menu.jsp"/>
 	</div>
 	<div id="main-content">
@@ -55,47 +47,45 @@
 		</div>
 		<div id="page-container">
 			<div class="card">
-				<div class="title">공지사항 글 수정</div>
+				<div class="title">QnA 글 수정</div>
 				
-					<form action="./NoticeModifyPro.co" name="boardForm" method="post" enctype="multipart/form-data">
-						<input type="hidden" name="notice_num" value="${param.notice_num}">
+					<form action="./QnaModifyPro.co" name="boardForm" method="post">
+						<input type="hidden" name="qna_num" value="${param.qna_num}">
 						<input type="hidden" name="page" value="${param.page}">
 						<table >
 							<tr>
-								<th>분류</th>
+								<th><label for="qna_type">문의유형</label></th>
 								<td>
-									<label><input TYPE='radio' name='communityType' value='notice' checked="checked"/>공지사항</label>
-									<label><input TYPE='radio' name='communityType' value='event' />이벤트</label>
+									<select id="qnaTypeId" name="qna_type">
+									  <option value="상품문의">상품문의</option>
+									  <option value="배송문의">배송문의</option>
+									  <option value="교환및반품문의">교환및반품문의</option>
+									  <option value="주문변경및취소문의">주문변경및취소문의</option>
+									  <option value="입금및결제문의">입금및결제문의</option>
+									  <option value="기타문의">기타문의</option>
+									</select>
 								</td>
 							</tr>
 							<tr>
-								<th><label for="board_title">제목</label></th>
-								<td><input type="text" name="board_title" required="required" value="${noticeArticle.getNotice_title() }">
+								<th><label for="qna_title">제목</label></th>
+								<td><input type="text" name="qna_title" id="qnaTitleId"  required="required" value="${qnaArticle.getQna_title() }">
 								</td>
 							</tr>
 							<tr>
-								<th><label for="board_nickname">작성자</label></th>
-								<td><input type="text" name="board_nickname" value="${sNickname }" readonly="readonly"></td>
+								<th><label for="qna_nickname">작성자</label></th>
+								<td><input type="text" name="qna_nickname" value="${sNickname }" readonly="readonly"></td>
 							</tr>
 							<tr>
-								<th><label for="board_date">작성일</label></th>
-								<td><input type="text" name="board_date" readonly="readonly" value="${noticeArticle.getNotice_write_date() }">
+								<th><label for="qna_date">작성일</label></th>
+								<td><input type="text" name="qna_date" readonly="readonly" value="${qnaArticle.getQna_write_date() }">
 								</td>
 							</tr>
 							<tr>
-								<th><label for="board_content">내용</label></th>
+								<th><label for="qna_content">내용</label></th>
 								<td>
-									<textarea id="board_content" name="board_content"  rows="20" cols="100">${noticeArticle.getNotice_content() } </textarea>
+									<textarea id="board_content" name="qna_content"  rows="20" cols="100">${qnaArticle.getQna_content() } </textarea>
 								</td>
 							</tr>
-					  			<tr>
-									<th><label for="board_file">파일 첨부</label></th>
-									<td><input type="file" id="file1" name="board_file0"></td>
-								</tr>
-						  		<tr>
-									<th><label for="board_file">파일 첨부</label></th>
-									<td><input type="file" id="file1" name="board_file1"></td>
-								</tr>
 						</table>
 						<section id="commandCell">	
 							<input type="submit" value="수정">&nbsp;&nbsp;
