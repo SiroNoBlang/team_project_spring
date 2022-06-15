@@ -42,14 +42,14 @@ public class AdminController {
 		}
 		// 해당하는 개시물의 총 수
 		if (value != null) {
-			if (value.equals("0")) {
+			if (value.equals("0") || value.equals("VVVIP")) {
 				table = "info_detail";
 				value = "VVVIP";
-			} else if (value.equals("1") || value.equals("2") || value.equals("3")) {
+			} else if (value.equals("1") || value.equals("정상") || value.equals("2") || value.equals("정지") || value.equals("3") || value.equals("탈퇴")) {
 				table = "service_log";
-				if (value.equals("1")) {
+				if (value.equals("1") || value.equals("정상")) {
 					value = "정상";
-				} else if (value.equals("2")) {
+				} else if (value.equals("2") || value.equals("정지")) {
 					value = "정지";
 				} else {
 					value = "탈퇴";
@@ -64,14 +64,10 @@ public class AdminController {
 		int listCount = service.getListCount(table);
 		
 		// 뿌려줄 리스트 List 객체
-		System.out.println(value);
 		List<Map<String, String>> memberList = service.getManagementList(startRow, listLimit, value);
-		
-		System.out.println(memberList);
 		
 		// 멤버 상태에 따른 회원 수
 		Map<String, String> member = service.getStatusCount();
-		System.out.println(member);
 		
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
 		int startPage = ((int)((double)pageNum / pageLimit + 0.9) - 1) * pageLimit + 1;
@@ -99,6 +95,7 @@ public class AdminController {
 		
 		if(member != null) {
 			model.addAttribute("member", member);
+			model.addAttribute("value", value);
 			model.addAttribute("page", page);
 			return "AdminPage/management/management_detail";
 		} else {
@@ -117,6 +114,7 @@ public class AdminController {
 		if(isManagementUpdate > 0) {
 			model.addAttribute("code", code);
 			model.addAttribute("page", page);
+			model.addAttribute("value", value);
 			return "redirect:ManagementDetail";
 		} else {
 			model.addAttribute("msg", "수정이 되지 않았습니다.");
@@ -128,22 +126,17 @@ public class AdminController {
 	// 탈퇴한 회원의 삭제
 	@RequestMapping(value = "ManagementDelete", method = RequestMethod.GET)
 	public String managementDelete(String code, String page, String value, Model model) {
-		System.out.println(code);
-		System.out.println(page);
-		System.out.println(value);
+		int delete = service.isDelete(code);
 		
-//		int delete = service.isDelete(code);
+		if(delete > 0) {
+			model.addAttribute("page", page);
+			model.addAttribute("value", value);
+			return "redirect:Management";
+		} else {
+			model.addAttribute("msg", "삭제 실패!");
+			return "";
+		}
 		
-//		if(delete > 0) {
-//			model.addAttribute("page", page);
-//			model.addAttribute("value", value);
-//			return "";
-//		} else {
-//			model.addAttribute("msg", "삭제 실패!");
-//			return "";
-//		}
-		
-		return "";
 	}
 	
 	

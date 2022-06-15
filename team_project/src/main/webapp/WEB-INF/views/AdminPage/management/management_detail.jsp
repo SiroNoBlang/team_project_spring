@@ -51,7 +51,7 @@
 			<div class="card">
 				<div class="title">가입자 상세 정보</div>
 				<form action="ManagementUpdate?page=${page }" name="boardForm" method="post">
-				<input type="hidden" name="code" value="${code }">
+				<input type="hidden" name="code" value="${member.getCode() }">
 				<input type="hidden" name="value" value="${value }">
 					<table>
 						<tr>
@@ -184,7 +184,7 @@
 					<section id="commandCell">
 						<input type="submit" value="수정">
 						<c:if test="${member.getStatus() eq '탈퇴'}">
-							<input type="button" value="회원탈퇴" onclick="location.href='ManagementDelete?page=${page }%code=${code }&value=${value }'">
+							<input type="button" value="회원탈퇴" onclick="location.href='ManagementDelete?page=${page }&code=${member.getCode() }&value=${value }'">
 						</c:if>
 						<input type="button" value="목록" onclick="location.href='Management?page=${page }&value=${value }'">
 					</section>
