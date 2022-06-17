@@ -71,7 +71,7 @@
 								<td>${adminArticle.getContent() } <br>
 									<c:if test="${msg eq '공지사항' or msg eq '이벤트' }">
 										<c:forEach var="img" items="${imgFileList }">
-											<img src="./Upload/admin_notice_img/${img.getFile_real_name() }"> <br>
+											<img src="${path}/resources/images/upload/${table}/${img.getFile_real_name() }"><br>
 										</c:forEach>
 									</c:if> 
 								</td>
@@ -81,8 +81,7 @@
 								<th><label for="board_file">파일 첨부</label></th>
 								<td>
 									<c:forEach var="img" items="${imgFileList }">
-										<a href="./Upload/admin_notice_img/${img.getReal_name() }" download="${img.getFile_name() }"> 
-										${img.getFile_name() }</a><br>
+										<a href="${path}/resources/images/upload/${table}/${img.getReal_name() }" download="${img.getFile_name() }">${img.getFile_name() }</a><br>
 									</c:forEach> 
 								</td>
 							</tr>
@@ -90,9 +89,8 @@
 						</table>
 						<section id="commandCell">	
 							<input type="button" value="수정" onclick="location.href='communityModify?value_num=${param.value_num}&page=${param.page}&msg=${msg }'">
-							<input type="button" value="삭제" onclick="deleteContents()"> 
-							<input type="button" value="목록" onclick="history.back()">
-<%-- 							<input type="button" value="목록" onclick="location.href='NoticeList.co?page=${param.page}'"> --%>
+							<input type="button" value="삭제" onclick="deleteContents()">
+							<input type="button" value="목록" onclick="location.href='Community?page=${page}&table=${table}&search=${search}&searchType=${searchType}'">
 						</section>
 					</form>
 				 </div>

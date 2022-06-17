@@ -85,7 +85,7 @@
 							<tbody>
 								<c:if test="${not empty list and pageInfo.getListCount() > 0}">
 									<c:forEach var="list" items="${list }" varStatus="status">
-										<tr onclick="location.href='CommunityDetail?value_num=${list.getNum() }&page=${pageNum}&msg=${msg }'" style="cursor:pointer;">
+										<tr onclick="location.href='CommunityDetail?value_num=${list.getNum() }&page=${pageNum}&msg=${msg }&search=${search}&searchType=${searchType}'" style="cursor:pointer;">
 											<td>${listCount -(listCount -((pageNum-1)* listLimit + status.index)-1)}</td>
 											<td>
 											<!-- 답글에 대한 들여쓰기(공백 추가) 작업 처리 -->
@@ -141,4 +141,3 @@
 	<script src="${path}/resources/js/script.js"></script>
 </body>
 </html>
-

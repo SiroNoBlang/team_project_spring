@@ -209,7 +209,7 @@ public class AdminController {
 	
 	// 해당 글의 상세 정보 출력
 	@RequestMapping(value = "CommunityDetail", method = RequestMethod.GET)
-	public String communityDetail(String value_num, String page, String msg, Model model) {
+	public String communityDetail(String value_num, String page, String search, String searchType, String msg, Model model) {
 		
 		// 데이터베이스가 int 타입으로 되어 있기 때문에 변경 필수
 		int num = Integer.parseInt(value_num);
@@ -229,12 +229,20 @@ public class AdminController {
 			model.addAttribute("adminArticle", adminArticle);
 			model.addAttribute("imgFileList", imgFileList);
 			model.addAttribute("msg", msg);
+			model.addAttribute("table", table);
+			model.addAttribute("page", page);
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("search", search);
 			return "AdminPage/community/communityView";
 		} else {
 			table = "qna";
 			adminArticle = service.getArticle(num, table);
 			model.addAttribute("adminArticle", adminArticle);
 			model.addAttribute("msg", msg);
+			model.addAttribute("table", table);
+			model.addAttribute("page", page);
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("search", search);
 			return "AdminPage/community/communityView";
 		}
 		
